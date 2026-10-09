@@ -1,0 +1,64 @@
+{
+  "id": "cs-01a12019-3d70-7698-a27c-e6216548e7f2",
+  "baseVersion": 4,
+  "createdAt": "2026-10-09T10:00:59.242Z",
+  "operations": [
+    {
+      "kind": "updateElement",
+      "elementId": "6a96f6f2-5da8-4e8e-b66f-795387e4040f",
+      "description": "ASP.NET Core (.NET 10) FastEndpoints service for DiscoveryService; generates its OpenAPI document at /swagger/v1/swagger.json and accepts accommodations from providers.",
+      "status": "unverifiable",
+      "evidence": "Reported by the assistant; the repository is not an Nx workspace"
+    },
+    {
+      "kind": "addComponent",
+      "id": "component-e728b17b907e51ff",
+      "containerId": "6a96f6f2-5da8-4e8e-b66f-795387e4040f",
+      "name": "Accommodation Intake",
+      "description": "Receives Accommodation submissions from providers over POST /accommodations, validates them and keeps them in a process-local in-memory store for the lifetime of the service.",
+      "technology": "FastEndpoints",
+      "paths": [
+        "src/DiscoveryService.Backend/Accommodations/**"
+      ],
+      "status": "confirmed",
+      "evidence": "4 file(s) changed under src/DiscoveryService.Backend/Accommodations/**"
+    },
+    {
+      "kind": "addRelationship",
+      "sourceId": "10000000-0000-4000-8000-000000000012",
+      "targetId": "component-e728b17b907e51ff",
+      "label": "Provides accommodation (POST /accommodations, JSON)",
+      "status": "unverifiable",
+      "evidence": "Reported by the assistant; the repository is not an Nx workspace"
+    },
+    {
+      "kind": "addSourceCode",
+      "id": "source-0503324a508cbf7a",
+      "componentId": "component-e728b17b907e51ff",
+      "name": "ProvideAccommodation endpoint",
+      "description": "FastEndpoints endpoint for POST /accommodations (operationId ProvideAccommodation) with its validator. It rejects bodies missing required Accommodation/Location fields with 400, stores valid ones and answers 204; its metadata is the source of the published contract.",
+      "role": "endpoint",
+      "paths": [
+        "src/DiscoveryService.Backend/Accommodations/ProvideAccommodationEndpoint.cs",
+        "src/DiscoveryService.Backend/Accommodations/AccommodationValidator.cs",
+        "src/DiscoveryService.Backend/Accommodations/Accommodation.cs"
+      ],
+      "status": "confirmed",
+      "evidence": "3 file(s) changed under src/DiscoveryService.Backend/Accommodations/ProvideAccommodationEndpoint.cs, src/DiscoveryService.Backend/Accommodations/AccommodationValidator.cs, src/DiscoveryService.Backend/Accommodations/Accommodation.cs"
+    },
+    {
+      "kind": "addSourceCode",
+      "id": "source-6809af33c9f64326",
+      "componentId": "component-e728b17b907e51ff",
+      "name": "In-memory accommodation store",
+      "description": "IAccommodationStore and its ConcurrentQueue-backed singleton implementation, which hold copies of received accommodations. It is non-durable by design: entries are lost on restart and not shared between instances.",
+      "role": "store",
+      "paths": [
+        "src/DiscoveryService.Backend/Accommodations/AccommodationStore.cs"
+      ],
+      "status": "confirmed",
+      "evidence": "1 file(s) changed under src/DiscoveryService.Backend/Accommodations/AccommodationStore.cs"
+    }
+  ],
+  "file": ".okeno/changesets/2026-10-09T10-00-59_01a12019-3d70-7698-a27c-e6216548e7f2.json"
+}
