@@ -75,10 +75,13 @@ public sealed class ProvideAccommodationTests : IDisposable
     [InlineData("""{}""", "empty object")]
     public async Task Submission_missing_a_required_field_returns_400_and_is_not_stored(string body, string because)
     {
+        Assert.Equal(HttpStatusCode.NoContent, (await PostJson(ValidAccommodation)).StatusCode);
+
         var response = await PostJson(body);
 
         Assert.True(response.StatusCode == HttpStatusCode.BadRequest, because);
-        Assert.Empty(Store.GetAll());
+        var stored = Assert.Single(Store.GetAll());
+        Assert.Equal("Nile View Hotel", stored.Name);
     }
 
     [Fact]
