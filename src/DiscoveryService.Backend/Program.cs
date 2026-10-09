@@ -1,8 +1,10 @@
+using DiscoveryService.Backend.Accommodations;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<IAccommodationStore, InMemoryAccommodationStore>();
 builder.Services.AddFastEndpoints();
 builder.Services.SwaggerDocument(o =>
 {
